@@ -89,7 +89,13 @@ workflow improvements. Required third-party snapshots remain unchanged.
 Common instructions remain shared. Coordinator now carries separate Codex and
 Claude host references, with Codex the primary documented installation path.
 The root installer defaults to Codex and offers explicit Claude, Cursor and
-all-host selections, linking each distinct discovery root to the same source.
+all-host selections. Distribution uses a GitHub archive and independent installed
+copies, replacing checkout-dependent symlinks. Recipients can delete the download
+after installation. Identical copies are accepted on reruns; differing folders
+and legacy links are preserved as conflicts. Codex and Cursor share one root;
+selecting Claude too produces a separate copy without duplicating repository
+sources. Updates remain explicit and preserve local edits; no package manager,
+background updater or automatic migration is bundled.
 CLAUDE.md imports AGENTS.md so repository policies have one maintained source.
 No installed originals, host configuration or private state were changed.
 

@@ -92,11 +92,20 @@ Document and support global user-level installation only, across projects.
 Use home-relative or resolved paths, never one person's concrete home path.
 Codex is the default installation target, using `~/.agents/skills`. Claude Code
 is an explicit option using `~/.claude/skills`; Cursor can use the shared
-`~/.agents/skills` root. Link selected discovery roots to the same complete
-repository skill folders, without per-host copies or duplicate shared links.
+`~/.agents/skills` root. Distribute a downloadable archive and copy complete
+skill folders into selected discovery roots. Recipients must be able to delete
+the extracted download after installation; do not require a permanent checkout,
+symlinks, Git or administrator permissions for installation. Keep one maintained
+repository collection; selected hosts with different discovery roots receive
+independent installed copies, while shared roots are installed only once.
 Verify official documentation before changing product discovery guidance.
 Do not silently overwrite or remove existing installations, and do not change
 unselected host roots. Test installation only in temporary user directories.
+Accept identical reruns and report conflicting folders or legacy links before
+writing. Preserve customizations during explicit update/migration steps and keep
+backups outside discovery roots. Exclude caches, private state and source links
+from distribution. Verify installed resources after deleting the source archive
+and extracted folder; report native-platform testing limits honestly.
 
 Keep required skills as siblings. Resolve supporting resources relative to the
 skill's real directory. Allow standalone dependency names as well as a plugin
