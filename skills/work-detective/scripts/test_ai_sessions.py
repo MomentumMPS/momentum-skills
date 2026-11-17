@@ -93,6 +93,27 @@ class HistoryTests(unittest.TestCase):
         with self.assertRaises(SystemExit):
             self.run_cli("show", "session-")
 
+    def test_out_of_order_claude_records_match_both_days(self):
+        project = self.claude / "example"
+        project.mkdir(parents=True)
+        path = project / "midnight-session.jsonl"
+        records = [
+            {"type": "user", "timestamp": "2026-01-02T00:00:01Z",
+             "message": {"content": "Review the example"}},
+            {"type": "assistant", "timestamp": "2026-01-01T23:59:59Z",
+             "message": {"content": "Earlier response"}},
+        ]
+        path.write_text("".join(json.dumps(record) + "\n" for record in records))
+        before = path.read_bytes()
+        for date, expected in (("2026-01-01", 1), ("2026-01-02", 1),
+                               ("2025-12-31", 0), ("2026-01-03", 0)):
+            with self.subTest(date=date):
+                out, err = self.run_cli("list", "--source", "claude",
+                                        "--since", date, "--until", date)
+                self.assertEqual(out.count("midnight-session"), expected)
+                self.assertIn(f"claude={expected}", err)
+        self.assertEqual(path.read_bytes(), before)
+
     def test_wal_without_shm_is_refused_without_source_writes(self):
         self.codex.mkdir()
         live = Path(self.tmp.name) / "live.sqlite"

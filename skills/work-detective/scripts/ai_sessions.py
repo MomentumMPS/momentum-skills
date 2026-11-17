@@ -114,8 +114,8 @@ def claude_sessions():
                     title = d.get("customTitle") or title
                 ts = iso(d["timestamp"]) if isinstance(d.get("timestamp"), str) else None
                 if t in ("user", "assistant") and ts and not d.get("isSidechain"):
-                    first = first or ts
-                    last = ts
+                    first = ts if first is None else min(first, ts)
+                    last = ts if last is None else max(last, ts)
                     cwd = cwd or d.get("cwd")
                     if t == "user" and prompt is None:
                         m = clean(text_of((d.get("message") or {}).get("content")))

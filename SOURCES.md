@@ -112,6 +112,8 @@ creating sidecars in the source or silently missing WAL-only history. Source
 helper changes remain confined to the repository copy.
 The helper configures SIGPIPE only on platforms that provide it. An entrypoint
 regression test simulates its absence on Windows; native Windows is not tested.
+Claude session date bounds use the earliest and latest timestamps regardless
+of record order, with a regression covering out-of-order records across midnight.
 
 New packaging removes identity, home paths, work contacts, internal context-file
 destinations and standing personal persistence preferences. Optional ticket
