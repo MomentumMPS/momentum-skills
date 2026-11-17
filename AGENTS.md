@@ -16,6 +16,10 @@ over convenience, fidelity to installed sources and publication speed.
   approval records, personal preferences, credentials, runtime memory and
   machine-specific paths. Keep private tracker identifiers out of public branch
   names and commit/PR metadata too; refer to the work by its reusable outcome.
+- Check Git author and committer metadata before publication. Do not expose a
+  private or work email: use the verified account's public noreply identity for
+  that commit and read back both fields. Preserve accurate attribution and the
+  user's global Git configuration; never invent an account or contact address.
 - Resolve identity, audience, accounts, team conventions and timezone from the
   current user's authorized context at execution time. Use fictional examples.
   Public upstream source links and legally required third-party notices are
