@@ -4,11 +4,13 @@ import importlib.util
 import io
 import json
 from pathlib import Path
+import runpy
 import sqlite3
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 spec = importlib.util.spec_from_file_location("ai_sessions", Path(__file__).with_name("ai_sessions.py"))
 history = importlib.util.module_from_spec(spec)
@@ -33,6 +35,17 @@ class HistoryTests(unittest.TestCase):
         with patch.object(sys, "argv", ["ai_sessions", *args]), contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
             history.main()
         return out.getvalue(), err.getvalue()
+
+    def test_entrypoint_without_sigpipe_support(self):
+        signals = SimpleNamespace(signal=Mock(), SIG_DFL=0)
+        out = io.StringIO()
+        with patch.dict(sys.modules, {"signal": signals}), \
+                patch.object(sys, "argv", ["ai_sessions.py", "--help"]), \
+                contextlib.redirect_stdout(out), self.assertRaises(SystemExit) as result:
+            runpy.run_path(str(Path(__file__).with_name("ai_sessions.py")), run_name="__main__")
+        self.assertEqual(result.exception.code, 0)
+        self.assertIn("usage:", out.getvalue())
+        signals.signal.assert_not_called()
 
     def test_missing_sources_report_gaps(self):
         out, err = self.run_cli("list", "--since", "2026-01-01", "--until", "2026-01-02")

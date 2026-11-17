@@ -110,6 +110,8 @@ through disposable private copies; active or WAL-mode Codex databases are
 reported unavailable and require host history tools instead. This avoids
 creating sidecars in the source or silently missing WAL-only history. Source
 helper changes remain confined to the repository copy.
+The helper configures SIGPIPE only on platforms that provide it. An entrypoint
+regression test simulates its absence on Windows; native Windows is not tested.
 
 New packaging removes identity, home paths, work contacts, internal context-file
 destinations and standing personal persistence preferences. Optional ticket

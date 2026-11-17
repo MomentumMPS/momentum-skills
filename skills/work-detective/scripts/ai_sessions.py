@@ -273,7 +273,8 @@ def main():
 
 if __name__ == "__main__":
     import signal
-    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+    if hasattr(signal, "SIGPIPE"):
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
     try:
         main()
     except (OSError, sqlite3.Error, ValueError) as exc:
