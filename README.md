@@ -132,6 +132,38 @@ context belongs in the collection. `SKILL.md` is the common entrypoint;
 `agents/openai.yaml` is optional Codex metadata. Installing locally does not
 install into cloud agents, remote machines or other operating-system accounts.
 
+Work Detective's local-history fallback requires Python 3.9 or newer. Its
+optional `--timezone <IANA-zone>` uses the timezone database available to Python;
+UTC is the default and needs no additional zone data. The helper preserves
+supported mid-turn user corrections and source provenance, and reports missing
+or unsupported history as a coverage gap. Session matches are not proof that
+every message or outcome was reviewed.
+
+### Shared conventions across projects
+
+The installer copies skill folders only; it does not change global instruction
+files. [AGENTS.md](AGENTS.md) is the canonical source for this collection's shared
+conventions: critical-action gates, tool-selection fallback, one ticket per
+session, ticket-status titles, skill speaker tags and specialist ownership.
+
+To adopt these conventions across projects, review and merge the relevant
+sections into your existing global instructions, preserving your preferences
+and reconciling conflicts. Do not copy this repository's privacy, licensing,
+inventory or publication rules into unrelated projects, replace a whole global
+file, or import a path inside the disposable download.
+
+- **Codex:** use `AGENTS.md` in the active Codex home, normally
+  `~/.codex/AGENTS.md`. An existing `AGENTS.override.md` takes precedence; inspect
+  it rather than deleting it. See the official
+  [instruction discovery guidance](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
+- **Claude Code:** merge into `~/.claude/CLAUDE.md`. See the official
+  [user-level instruction guidance](https://code.claude.com/docs/en/memory).
+
+Start a fresh session in an unrelated project and inspect which instructions
+loaded. Keep the reviewed text in the global files so the extracted download
+can still be deleted. These are instruction conventions, not a technical
+enforcement layer or proof that an already-open chat reloaded them.
+
 ## Maintaining the collection
 
 Back up separately maintained installed skills by comparing their active sources

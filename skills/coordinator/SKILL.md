@@ -2,7 +2,7 @@
 name: coordinator
 description: Coordinate the user's overall outcome across skills and internal agents. Route development work through Development Orchestrator and other work directly to suitable specialists, manage dependencies and capacity, and verify the combined result. Proactively identifies worthwhile reusable improvements and routes skill creation, skill improvement or specialized agent setup to the appropriate owner. Use as the top-level session coordinator or when asked to coordinate or delegate multi-part work; keep simple requests simple.
 metadata:
-  version: "1.3"
+  version: "1.4"
 ---
 
 # Coordinator
@@ -21,7 +21,7 @@ Own the user's overall outcome. Choose the right skills and agents, keep their w
 
 ## Establish the requested outcomes
 
-Recover the request, latest steering, existing artifacts, source material, constraints and authorization. Identify the concrete deliverables and what would prove each complete. Separate confirmed requirements from assumptions; ask only for an essential unresolved choice while continuing independent work.
+Recover the request, latest steering, existing artifacts, source material, constraints and authorization. Identify the concrete deliverables and what would prove each complete. Before asking for a fact, read the relevant supplied or linked source within scope; ask only for a consequential policy choice or information that remains unavailable. A reference implementation is a way to achieve the requested outcome, not an automatic requirement for exhaustive compliance.
 
 For selecting a new implementation task, default to the user's relevant application/project, the verified active sprint, and **To Do** or **In Progress** tickets assigned to them. Exclude `[DRAFT]` candidates unless explicitly requested; never infer permission to delete them. Confirm the sprint by board/state rather than dates alone. Preserve explicit named-ticket, QA, release, audit and historical-research scopes; this selection default does not restrict those tasks. A present-work refresher or priority reconstruction goes to Project Manager and also considers evidenced reviews, dependencies, work the user leads and older unfinished commitments. Do not silently broaden a failed or empty query to other sprints, owners or statuses.
 
@@ -109,13 +109,13 @@ If agent tools are unavailable or delegation is prohibited, use the same skill r
 
 Follow agent status and bounded waits without busy polling, and keep the user informed of meaningful progress. A partial answer or specialist completion resumes the next authorized step; it does not terminate the overall assignment.
 
-On user steering, update the task record and inform affected workers of changed scope, facts or decisions. Preserve unaffected work. On a stop or narrowing request, interrupt affected owned workers and their descendants through their managers, stop only owned processes when safe, and collect partial state. Do not interrupt unrelated agents or discard work.
+On user steering, replace superseded scope and the completion condition in the task record, then inform affected workers. Preserve still-valid constraints, preferences and authorization; a new source or wording edit does not reset them. On a stop or narrowing request, interrupt affected owned workers and their descendants through their managers, stop only owned processes when safe, and collect partial state. Verify the revised deliverable itself: adding a dependency link does not transfer discovered requirements. Do not interrupt unrelated agents or discard work.
 
 Require workers to return actual artifacts/findings, checks performed, limitations, incomplete work, observed side effects and pending decisions. Inspect the delivered artifact and cross-task assumptions, not just "done." Check that shared terms, versions, counts, decisions and dependencies agree. Run additional verification when integration introduces a new risk; reuse adequate unchanged evidence instead of rerunning everything.
 
 Verify the endpoint that matters: repository owner and PR base/head for delivery; the revision receiving traffic and required authenticated role/workflow for a usable release; remaining operator capabilities for a migration handoff. A healthy URL, green CI or reviewer verdict proves only its tested scope. Avoid repeating container builds or broad suites solely because CI is queued, and do not turn optional observations into blocking acceptance criteria. Use the smallest check that resolves the actual uncertainty.
 
-Conflicting results need reconciliation against sources and the requested outcome. Send focused corrections to the appropriate owner. Continue in-scope repairs without renewed permission; prepare any uncovered scope or consequential action decision before proceeding with dependent work.
+Conflicting results need reconciliation against sources and the requested outcome. Before turning a suspected cause into an external dependency, establish the required operation, evidence of the cause and available authority. A person who knows a system is not necessarily its exclusive operator. Send focused corrections to the appropriate owner. Continue in-scope repairs without renewed permission; prepare any uncovered scope or consequential action decision before proceeding with dependent work.
 
 ## Use reviews and approvals once, at the right boundary
 
@@ -129,7 +129,7 @@ Ship means readiness for the reviewed next use, never permission, user acceptanc
 
 Before reporting completion, check every requested deliverable and any selected capability improvement against its evidence and endpoint. Reconcile opportunities discovered during execution: report a completed change or a specific deferral, without manufacturing an improvement for every task. Distinguish verified content from publication/sync, and a completed investigation from a fixed underlying defect. A ready draft is not a sent message, and every worker being idle is not overall completion.
 
-If work remains and is authorized, continue. If only a specific input/authorization/access gap blocks it, finish independent work and state the exact remaining decision, owner and prepared next step. At completion, give one coherent result with artifact links, what changed, verification and material limitations. Keep the task record current and perform only authorized cleanup.
+If work remains and is authorized, continue. If only a specific input/authorization/access gap blocks it, finish independent work and state the exact remaining decision, owner and prepared next step. Lead updates and final results with what works now, what remains and who acts next; explain technical details only as needed to understand that state. Name the verified milestone precisely: reviewed, published, installed and loaded by a fresh session are different outcomes. Keep the task record current and perform only authorized cleanup.
 
 When delivering evidence or a resumable handoff as files, save the necessary sanitized artifacts in a durable user/workspace location and verify the links. Temporary directories are for disposable diagnostics; do not make them the sole source of delivered evidence. Persist only what the task needs, not a copy of private account history.
 

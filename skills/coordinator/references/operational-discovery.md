@@ -2,6 +2,8 @@
 
 Use this for access-dependent work, not as startup ceremony for every task. Prefer a suitable connected tool or verified CLI/API over taking control of the desktop. Follow the user's explicit tool choice and actual tool documentation.
 
+Read relevant tool descriptions and their documented runtime/plugin routes before declaring a capability absent. A missing top-level tool name does not exclude a supported bundled route. Check that route with the smallest permitted read; do not install packages or bypass a denied operation. Distinguish not yet discovered, capability unavailable, sign-in needed and operation denied. An available desktop route still requires the user's choice before controlling their active session.
+
 ## CLI and cloud
 
 1. Reuse relevant repository runbooks and recent successful session evidence. Check the executable with `command -v`/`whence`, known installation locations and relevant shell initialization. A missing PATH entry, moved SDK or expired temporary directory does not establish missing cloud access. Keep the search bounded to plausible locations; do not scan the whole home directory or read credential stores.

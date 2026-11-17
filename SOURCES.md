@@ -9,22 +9,23 @@ state. The maintainer confirmed authorship of `work-detective`.
 
 | Skill | Active source at synchronization | Declared version/license |
 | --- | --- | --- |
-| coordinator | `~/.codex/skills/coordinator` | 1.3; no license declared |
+| coordinator | `~/.codex/skills/coordinator` | 1.4; no license declared |
 | project-manager | `~/.codex/skills/project-manager`, resolving to the shared user skill root | No version or license declared |
 | slack-message-drafter | `~/.codex/skills/slack-message-drafter` | No version or license declared |
 | skill-improver | `~/.codex/skills/skill-improver` | No version or license declared |
-| mad-senior | `~/.codex/skills/mad-senior` | 1.3; no license declared |
-| development-orchestrator | `~/.codex/skills/development-orchestrator` | 2.2.0; MIT; bundled LICENSE retained with a non-personal contributor attribution |
-| development-supporter | `~/.agents/skills/development-supporter` | 4.1; Apache-2.0 declared in frontmatter |
+| mad-senior | `~/.codex/skills/mad-senior` | 1.4; no license declared |
+| development-orchestrator | `~/.codex/skills/development-orchestrator` | 2.3.0; MIT; bundled LICENSE retained with a non-personal contributor attribution |
+| development-supporter | `~/.agents/skills/development-supporter` | 4.2; Apache-2.0 declared in frontmatter |
 | jira-ticket-supporter | `~/.agents/skills/jira-ticket-supporter` | No version or license declared |
 | requirement-collector | `~/.agents/skills/requirement-collector` | No version or license declared |
 | progress-summary | `~/.agents/skills/progress-summary` | No version or license declared |
 | work-detective | `~/.agents/skills/work-detective` | No version or license declared |
 
-Codex links for the shared skills resolve to `~/.agents/skills`. Older Claude
-copies differed for development-supporter, jira-ticket-supporter, and
-requirement-collector. The active Codex/shared sources above were selected;
-those older copies and all installed originals were left untouched.
+Current custom sources resolve to `~/.agents/skills`; Codex and Claude aliases
+refer to those shared installed originals on the source machine. Repository
+copies keep portable resource paths and sanitized defaults. Recipient installs
+remain independent copies in the selected hosts' discovery roots. Installed
+originals and private state were left untouched.
 
 ## Required third-party skills
 
@@ -66,7 +67,7 @@ own material; absence of a license is not a new redistribution grant.
   `jira-ticket-supporter`, and `requirement-collector`, uses `ponytail-review` and
   `mad-senior` for applicable risks, and conditionally uses `find-skills`.
 - `development-supporter` uses `ponytail-review` and `mad-senior` for applicable
-  risks. Version 4.1 no longer requires the orchestrator's shared review-loop file.
+  risks. Version 4.2 does not require the orchestrator's shared review-loop file.
 - `skill-improver` uses `skill-creator` when available, with direct validation
   fallback. `mad-senior` routes executable-code questions to `ponytail-review`.
 - `progress-summary` requires sibling `work-detective`.
@@ -77,6 +78,44 @@ own material; absence of a license is not a new redistribution grant.
   access, and PyYAML are prerequisites, not skills.
 
 ## Synchronization evidence
+
+### Reviewed improvement phase — 2026-11-17
+
+Synchronized the reusable improvements in ten existing custom skills across
+nineteen files: Coordinator, Development Orchestrator, Development Supporter,
+Jira Ticket Supporter, Requirement Collector, Project Manager, Slack Message
+Drafter, Mad Senior, Skill Improver and Work Detective. Progress Summary and the
+five required third-party snapshots remain unchanged. The separate standards
+repository's live inventory was checked again; its five audit/audit-authoring
+skills remain excluded.
+
+The phase strengthens source-first investigation, substantive requirements and
+correction handoffs, operator/data preservation, actual user-path/runtime/role
+verification, partial ticket-context recovery, and audience-aware revisions.
+Context persistence still needs the current user's authorization and a resolved
+destination; private standing consent, repository destinations and personal
+writing preferences were not imported. Resource paths resolve from the installed
+skill directory; namespaced and standalone dependency routes remain supported.
+
+The history helper and its seventeen offline regression tests now match the
+reviewed shared source. They add structured human mid-turn correction provenance,
+replay deduplication, coverage warnings and optional IANA timezone bounds while
+retaining the repository's read-only database-copy, full-message, date-order and
+portable startup safeguards. Callers distinguish matching sessions from reviewed
+outcomes and never treat transcript roles as new authority.
+
+AGENTS.md contains the complete reusable critical-action, tool-fallback,
+single-ticket and verified-ticket-status conventions. CLAUDE.md imports that
+canonical policy. The README explains explicitly adopting these sections into
+existing global instructions; installing skills does not silently replace global
+configuration. No extra policy copy, dependency or installer behavior is added.
+
+Private review reports, approval records, local paths, transcripts, runtime
+journals, and one-off validation harness/output archives are excluded. Behavioral
+review covered representative offline actions and artifacts; it does not certify
+live services, native Windows, fresh-host loading or universal agent adherence.
+
+### Earlier collection and packaging synchronization
 
 On 2026-11-17, compared current installed sources with the accepted repository
 baseline. Refreshed Coordinator, Development Orchestrator, Development Supporter,
@@ -108,8 +147,9 @@ The helper retains wrapped user instructions and warns about missing or
 malformed transcript records. It queries stable rollback-mode databases only
 through disposable private copies; active or WAL-mode Codex databases are
 reported unavailable and require host history tools instead. This avoids
-creating sidecars in the source or silently missing WAL-only history. Source
-helper changes remain confined to the repository copy.
+creating sidecars in the source or silently missing WAL-only history. These
+repository-first safeguards are also retained in the newly synchronized shared
+helper; installed sources are never modified by repository maintenance.
 The helper configures SIGPIPE only on platforms that provide it. An entrypoint
 regression test simulates its absence on Windows; native Windows is not tested.
 Claude session date bounds use the earliest and latest timestamps regardless
