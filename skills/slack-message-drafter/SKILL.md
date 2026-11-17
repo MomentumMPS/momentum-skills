@@ -12,9 +12,10 @@ Make the message sound like the current user. Resolve their voice from explicit 
 Use explicit user corrections and their own written or adapted messages as evidence. An assistant draft they have not endorsed is weaker evidence. The following are general writing guidance; adapt them to the user's evidenced preferences.
 
 - **Positive leadership.** Lead with what is possible, moving forward, or ready. Explain a constraint through the practical path ahead. Avoid defensive refusals, unnecessary negativity, and sounding as though a decision is arbitrary. Keep real blockers visible. For bad news or a failed release, state the problem plainly first, then give the owned next step; do not sugarcoat it.
-- **Personal ownership.** Use straightforward “I’m coordinating…,” “I’ll verify…,” or “I’ll give you an update…” when the evidence supports the user owning that action. Name the next step instead of hiding behind passive language. Do not invent commitments or take credit for someone else's work.
+- **Personal ownership.** Use “I” for the user's own actions and “we” only for an evidenced joint result. Name the next step instead of hiding behind passive language. Do not invent commitments, take credit for someone else's work, or imply that the user leads another person's meeting.
 - **Collegial confidence.** Sound like a capable teammate: warm, direct, and cooperative. Avoid unnecessary deference, inflated authority, or a corporate announcement voice. Use the actual relationship; do not assume that everyone is a peer or that the user reports to the recipient.
 - **Concise, connected writing.** Prefer a short natural paragraph or a few short paragraphs for a DM. Keep the useful outcome, brief context, and next step. Honor requested brevity; do not turn a simple update into a report. A requested meeting recap may need more structure.
+- **Punctuation preferences.** Apply the current user's explicit punctuation preferences when supplied; do not import another person's defaults.
 - **Realistic optimism.** Express intent confidently while keeping dependencies clear: “I’m pushing to have this ready tomorrow. I’ll confirm after validation.” Preserve conditions rather than turning an aim into a guarantee.
 - **Natural alignment.** When coordination needs an answer, finish with a simple question such as “Does that work for you?” or a direct confirmation request. Do not add an automatic question to announcements that need no reply.
 - **Warm, inclusive language.** A greeting, light enthusiasm, or an occasional emoji can fit. In Spanish, retain the user’s natural warmth when the context supports it; do not manufacture slang or exaggerate a regional persona. Improve grammar without making the message stiff or imitating typos.
@@ -23,7 +24,7 @@ The example phrases above illustrate the profile; they are not mandatory lines o
 
 ## Shape the message around the reader
 
-Put the main news or request first, explain why it matters to this audience, then give the next step when useful. Explain features through what people can now do. A reply answers the actual question; an announcement gives enough context to readers outside this chat.
+Put the main news or request first, explain why it matters to this audience, then give the next step when useful. Explain features through what people can now do. A reply answers the actual question; an announcement gives enough context to readers outside this chat. Select what the recipient needs to act: supported internal reasoning, technical identifiers, other projects and blame do not belong merely because they are known. Discretion must not conceal an access change, real blocker or required action.
 
 Keep formatting light and skimmable. Use bullets for parallel features or actions, and adapt to the requested length and structure. When fully Slack-compatible formatting is requested, use Slack-style emphasis and simple lists; avoid Markdown headings, tables, and link syntax the paste surface will show literally. Never invent @handles or channel references.
 
@@ -35,7 +36,7 @@ Ask only when a missing fact materially changes the message. Otherwise omit none
 
 ## Deliver the draft
 
-Offer one strong draft. Supply alternatives only when requested or when a meaningful tone choice remains unresolved. For revisions, preserve correct facts and the intended audience while making the requested change.
+Offer one strong draft. Supply alternatives only when requested or when a meaningful tone choice remains unresolved. Across revisions, retain the accepted audience, ownership voice, title, length, Slack formatting and exclusions. Replacement source material changes the content, not those constraints; apply only newer explicit corrections that supersede them. Do not append an analysis or requirements table to a copy-ready message unless requested.
 
 Keep skill speaker tags, assistant explanations, validation notes, and “draft only” notices outside the copyable message. This skill does not send, schedule, or save messages in Slack. Sending requires a separate authorized execution workflow; drafting grants no such authority. Never claim a message was sent without verified execution.
 

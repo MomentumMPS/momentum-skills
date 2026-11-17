@@ -25,7 +25,7 @@ For an external action, show the concrete change, target, actual data/integratio
 
 For end-to-end resolution, request routine start sync through `jira-ticket-supporter` under its existing-ticket contract. Keep classification in working context; publish only useful reader-facing progress. An investigation-only request does not authorize these writes unless separately requested.
 
-Execute authorized actions and verify their observed results. A blocked action remains pending; identify the owner/input needed. Do not turn an operational blocker into an invented code solution.
+Execute authorized actions and verify their observed results. A blocked action remains pending; identify the necessary operation and evidenced access/input, rather than assigning it to a person merely because they supplied earlier information. Distinguish internal sequencing and accepted follow-ups from an external blocker. Do not turn an operational blocker into an invented code solution. For migration/restore work, verify source entities and relationships, destination-only records/access and preserved user workflows; a successful import alone does not establish preservation.
 
 ## N2: Verify, report and sync
 

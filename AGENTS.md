@@ -147,28 +147,16 @@ new merges or publications.
 
 ## Conversation titles
 
-When title tools are available, apply this title convention without asking:
+Apply this permanent preference whenever title tools are available, without asking for confirmation. For ticket work, the leading label reflects the ticket's last verified tracker status, not the chat's progress or the agent's runtime state. This replaces the former OPEN/WAITING/PAUSED chat-state convention.
 
-- Begin with exactly one status: `[OPEN]` for work that can continue,
-  `[WAITING]` for a verified dependency, `[PAUSED]` only for an explicit user
-  deferral, or `[DONE]` only when the requested endpoint is verified complete.
-- Follow with `KEY-123: Short faithful topic` for one real ticket, or
-  `[2 TICKETS][KEY-123 & KEY-456]: Shared topic` for several. Preserve all ticket
-  numbers, using an unambiguous shared prefix if space is tight.
-- Otherwise use `[NO-TICKET] Subject — Specific task`. Incidental ticket mentions
-  do not turn general discovery, audits or administration into ticket work.
-- Keep the subject stable, describe the requested outcome and last verified
-  state, and include a short verified dependency in every `[WAITING]` title.
-  Reassess on start/resume, scope or dependency changes, explicit pause and
-  before ending. A finished turn, age or archive state is not completion.
-- Rename only the current chat unless a bounded batch is explicitly requested.
-  Inspect requests and outcomes before classifying history; preserve unresolved
-  titles rather than guessing. Verify saved titles are not truncated. Renaming
-  never authorizes messaging, resuming or monitoring other chats.
-- For authorized batches, preserve archive/project placement and record old
-  and new titles. Use explicit reporting dates for dated recaps. Reopen a done
-  title when more work is requested, and replace NO-TICKET when a specific
-  ticket becomes the actual scope; never infer ownership from a mention.
+- Use `[TODO]`, `[IN-PROGRESS]`, `[ON-HOLD]`, `[REVIEW/QA]`, `[DONE]`, or `[CANCELED]` for ticket work. Normalize the actual workflow status using its evidenced meaning: queued/not started, active work, explicitly on hold, review or QA, completed, or canceled respectively. Preserve the distinction between completed and canceled; a generic closed category alone does not establish which applies.
+- Use `[STATUS] KEY-123: Short faithful topic` for one identified work ticket. Derive the key and topic from the real ticket or trusted context; never invent keys or infer ownership from incidental mentions. Verify status through the ticket owner workflow or explicit current user-provided status. If status or its mapping is unknown, retain the existing title and report the uncertainty rather than guessing; `[NO-TICKET]` is not an unknown-status fallback.
+- For work without a specific ticket, use `[NO-TICKET] Subject — Specific task` with no additional status prefix. General discovery, reporting, audits and administration can remain NO-TICKET despite incidental ticket mentions. Replace this form when a specific ticket becomes the actual scope.
+- A finished assistant turn, delivered PR, user pause, pending approval, resumed chat, or additional request does not itself change the ticket-status label. Update it only when the underlying status is verified to have changed. Renaming does not authorize a tracker transition. Track unfinished chat commitments and dependencies in the response or handoff even when the ticket label is `[DONE]` or `[CANCELED]`.
+- Keep one ticket per session unless explicitly approved otherwise. For approved multi-ticket work or read-only reporting, retain every key and the ticket count. If all statuses agree, use `[STATUS] [2 TICKETS][KEY-123 & KEY-456]: Shared topic`. If statuses differ, show each verified status beside its key, for example `[TODO] KEY-123 & [REVIEW/QA] KEY-456: Topic (2 tickets)`; do not invent one aggregate status. Multi-ticket formatting never authorizes additional ticket work.
+- Keep the ticket/subject core stable and distinctive words early. Use a short purpose or verified dependency suffix only when useful. Use explicit reporting dates for dated recaps. Respect the title tool's saved-length limit and verify the saved title for truncation. Shorten wording first; use unambiguous shared-prefix key compression where statuses remain clear, without silently dropping keys, statuses or the ticket count.
+- Reassess on start/resume, a scope change, newly verified ticket status, and before ending. Reuse reliable status evidence; inspect the tracker through its owner workflow when a refresh is needed. Titles, age, archive state and earlier assistant claims alone do not prove current status. A title is a last-known state, not background monitoring.
+- Rename only the current chat by default. An explicit request to update other chats authorizes that bounded batch; inspect each chat and its ticket evidence, preserve archive/project placement, record old and new titles, and verify saved titles. Do not message or resume other chats merely to enforce titles.
 
 ## Skill use and ownership
 
@@ -201,3 +189,33 @@ Follow the current host's sandbox and approval rules. If a sandbox prevents
 access to the authenticated CLI session or network, retry in an authorized
 execution context before asking for login. All Jira write authorization
 requirements still apply.
+
+## Shared critical-action gates
+
+Apply these conventions across skills and delegated agents, subject to higher-priority host instructions. They supersede older conflicting workflow defaults, without adding routine approval stages.
+
+- Use a human GATE before a consequential action when an important judgment or authorization remains unresolved: destructive or hard-to-reverse changes to valuable data, production releases or changes with material outage/data risk, significant access/security/privacy changes, substantial spending or external commitments, or a business-policy choice with material consequences. Judge the actual target, impact, reversibility and uncertainty; an ordinary local edit or routine authorized update does not become critical merely because a tool can write.
+- Complete the authorized investigation, preparation and safe validation first. Present one concrete decision: the proposed action and exact target/environment, material impact and tradeoffs, relevant verification, recovery limits, and the approval needed. Explain why the gate applies. Do not perform the gated action while preparing it; continue independent authorized work.
+- Reuse explicit human approval that covers the same action, target, scope and material risks, including an adequately specific instruction in the current conversation. A broad goal such as “fix it,” a reviewer verdict, tool availability, sandbox approval or agent recommendation is not human approval of an uncovered critical decision. If the proposed scope or risk changes materially, obtain approval of that change. Silence and elapsed time never count as approval.
+- Keep approvals attached to their scope in session context and handoffs; do not require an extra approval document. Combine related decisions when they are ready for review. Do not ask again for unchanged approved work or gate routine reads, reversible local preparation, tests, or already authorized low-impact actions. Preserve any explicit user hold or narrower approval condition.
+
+## Tool-selection fallback and context economy
+
+Honor an explicit user tool choice, a tool prescribed by the active skill, or an already established suitable tool for the operation. Do not replace a clear authorized tool route merely to prefer a CLI. When no such route is established, use this strict fallback order, both while executing tasks and when designing skills:
+
+1. **CLI tools and lightweight skills first.** Check an available local CLI (for example `gh`, `aws`, `psql`, `curl`) or a lightweight script-based skill/plugin that can perform the operation.
+2. **Scoped MCP servers.** If no suitable CLI or lightweight skill exists, use a narrowly scoped MCP server configured for the task.
+3. **Built-in connectors and app-backed plugins.** Use these when neither preceding option can handle the operation.
+4. **Chrome Codex extension.** When no suitable programmatic interface exists, use the extension if supported by the current host, targeting specific selectors instead of full-page dumps.
+5. **Computer Use, last resort.** Use it only when the earlier programmatic and browser-extension routes have failed or are unsupported for the target application.
+
+Suitability includes the operation's capabilities, authorized access, required fidelity and active host constraints. Use known capability evidence to skip unsupported routes; do not exhaustively probe every tier or install tools, change authentication, copy credentials, or broaden access merely to force an earlier tier. Preserve specialist ownership, approval rules and the user's control of their active browser/profile; a fallback is not new authority. Higher-priority mandatory tools still apply.
+
+Regardless of route, request only necessary fields, dates and records. Filter large outputs at the source or with `jq`, `rg`/`grep`, `head`, or `--limit`; load focused excerpts and reuse verified results. Use limits for discovery, then paginate or fetch the required detail when completeness matters. Never present a truncated sample as complete evidence or suppress failures to save tokens.
+
+## One ticket per session
+
+- Default to one work ticket per Codex chat or Claude session. Keep implementation, ticket-specific investigation, drafting and mutations focused on that ticket; delegated agents inherit the same boundary. Completing it does not silently authorize picking up another ticket in the same session.
+- Working on multiple tickets in the same session requires explicit user approval. A clear request to handle a named or bounded set of tickets is that approval; do not ask for it twice. An explicit instruction to switch tickets authorizes that switch, not continued work on both. Record the approved exception and its scope in session context and handoffs, and keep each ticket's outcome distinct. Merely listing tickets, spotting a dependency or receiving a worker recommendation is not an exception.
+- Related-ticket reads needed to understand the primary ticket, incidental references, historical reporting and cross-ticket discovery/triage may remain read-only without opening a second ticket workflow. Do not use those exceptions to implement, draft changes for, or mutate additional tickets. A necessary follow-up ticket is additional ticket work and needs the same explicit exception.
+- If a second ticket needs work without that approval, finish independent work on the current ticket and present the concrete choice: authorize the additional scope here or use a separate session. Prepare a brief handoff from existing facts when useful; do not begin the second ticket's work or create/resume another user-owned chat without an explicit request. Multi-ticket title conventions describe approved scope or read-only reporting; they do not authorize execution.
