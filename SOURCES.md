@@ -1,6 +1,6 @@
 # Skill sources and dependencies
 
-Initially imported on 2026-11-03 and synchronized on 2026-11-10 from the
+Initially imported on 2026-11-03 and synchronized on 2026-11-17 from the
 maintainer's active installed skills. This is a curated
 backup of reusable instructions, not a dump of installed packages or runtime
 state. The maintainer confirmed authorship of `work-detective`.
@@ -10,6 +10,7 @@ state. The maintainer confirmed authorship of `work-detective`.
 | Skill | Active source at synchronization | Declared version/license |
 | --- | --- | --- |
 | coordinator | `~/.codex/skills/coordinator` | 1.3; no license declared |
+| project-manager | `~/.codex/skills/project-manager`, resolving to the shared user skill root | No version or license declared |
 | slack-message-drafter | `~/.codex/skills/slack-message-drafter` | No version or license declared |
 | skill-improver | `~/.codex/skills/skill-improver` | No version or license declared |
 | mad-senior | `~/.codex/skills/mad-senior` | 1.3; no license declared |
@@ -57,6 +58,10 @@ own material; absence of a license is not a new redistribution grant.
   work through the matching retained specialist. Its risk-based reviews use
   `mad-senior` and `ponytail-review`. Capability creation conditionally requires
   `skill-creator`, and `openai-docs` for uncertain Codex client/configuration facts.
+- `project-manager` uses `jira-ticket-supporter` for Jira, the Work Detective
+  session-history helper for authorized local evidence when host tools are
+  insufficient, and Coordinator/Development Orchestrator for requested execution.
+  Its continuity journal is private user state, never a bundled resource.
 - `development-orchestrator` routes into `development-supporter`,
   `jira-ticket-supporter`, and `requirement-collector`, uses `ponytail-review` and
   `mad-senior` for applicable risks, and conditionally uses `find-skills`.
@@ -72,6 +77,51 @@ own material; absence of a license is not a new redistribution grant.
   access, and PyYAML are prerequisites, not skills.
 
 ## Synchronization evidence
+
+On 2026-11-17, compared current installed sources with the accepted repository
+baseline. Refreshed Coordinator, Development Orchestrator, Development Supporter,
+Jira Ticket Supporter, Skill Improver and Work Detective; added Project Manager.
+The collection now contains eleven custom skills and five required third-party
+dependencies. Existing sanitized examples and reusable communication guidance
+were retained where source differences were personal context rather than
+workflow improvements. Required third-party snapshots remain unchanged.
+
+Common instructions remain shared. Coordinator now carries separate Codex and
+Claude host references, with Codex the primary documented installation path.
+The root installer defaults to Codex and offers explicit Claude, Cursor and
+all-host selections. Distribution uses a GitHub archive and independent installed
+copies, replacing checkout-dependent symlinks. Recipients can delete the download
+after installation. Identical copies are accepted on reruns; differing folders
+and legacy links are preserved as conflicts. Codex and Cursor share one root;
+selecting Claude too produces a separate copy without duplicating repository
+sources. Updates remain explicit and preserve local edits; no package manager,
+background updater or automatic migration is bundled.
+CLAUDE.md imports AGENTS.md so repository policies have one maintained source.
+No installed originals, host configuration or private state were changed.
+
+Work Detective's read-only session helper and offline fixtures were added for
+Project Manager's continuity workflow. Repository adaptations distinguish
+unavailable sources from empty results, support the observed Codex schema,
+retain UTC date boundaries and provide explicit full-message reading. These
+changes were tested with fictional local fixtures, not live work transcripts.
+The helper retains wrapped user instructions and warns about missing or
+malformed transcript records. It queries stable rollback-mode databases only
+through disposable private copies; active or WAL-mode Codex databases are
+reported unavailable and require host history tools instead. This avoids
+creating sidecars in the source or silently missing WAL-only history. Source
+helper changes remain confined to the repository copy.
+The helper configures SIGPIPE only on platforms that provide it. An entrypoint
+regression test simulates its absence on Windows; native Windows is not tested.
+Claude session date bounds use the earliest and latest timestamps regardless
+of record order, with a regression covering out-of-order records across midnight.
+
+New packaging removes identity, home paths, work contacts, internal context-file
+destinations and standing personal persistence preferences. Optional ticket
+context workflows resolve authorization and destinations from the current
+project; Project Manager stores authorized continuity under user state outside
+the skill collection. Mandatory policy now covers professionally sensitive
+information as well as personal data, every supporting artifact, preservation
+of explicit requirements and review before publication.
 
 On 2026-11-10, refreshed the retained custom workflows from active installed
 sources and added the custom `slack-message-drafter`. Coordinator’s implementation
@@ -110,8 +160,8 @@ use their own exposed capabilities and cannot assume Codex tools are present.
 
 ## Packaging changes
 
-- Retained the original six custom workflows and added three custom workflows,
-  keeping their required supporting files together.
+- Retained the custom collection and added the required workflows recorded
+  above, keeping their supporting files together.
 - Removed maintainer names and author metadata, named audience/colleagues,
   concrete timezone, personal email-provider and involvement preferences, and
   historical approval claims. Examples now use fictional projects and roles.
@@ -129,8 +179,9 @@ use their own exposed capabilities and cannot assume Codex tools are present.
   or `~/.local/state/jira-ticket-supporter/` when unset. The README explains
   migration of existing memory; installed private records were not changed.
 - Generalized Jira Epic conventions by removing the private source link, real
-  project names and ticket keys; preserved the required summary syntax and
-  blank Fix behavior.
+  project names and ticket keys. The fictional naming format is optional and
+  selected by the current team; existing legacy Fix fields are preserved only
+  within authorized updates, without adding empty Fix sections by default.
 - Removed author metadata from new custom copies, preserving source versions,
   workflow gates, invocation policies and necessary supporting references.
 - Excluded OS files, bytecode, caches, and generated/runtime state.
@@ -143,7 +194,7 @@ and team-specific choices now come from the current user.
 
 The live inventory of
 [Momentum Standard Skills](https://github.com/MomentumMPS/standards-momentum-skills/tree/main/skills)
-was checked on 2026-11-10. Its five skills remain maintained there:
+was checked on 2026-11-17. Its five skills remain maintained there:
 
 - momentum-architecture-audit
 - momentum-audit-skill-creator

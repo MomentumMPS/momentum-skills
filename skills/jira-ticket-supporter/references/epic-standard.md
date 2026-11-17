@@ -1,8 +1,8 @@
 # Epic summary standard
 
-Apply this standard whenever drafting or creating a new Epic. It overrides only the generic app/project summary format; retain the skill's description template, field defaults, and authorization requirements.
+Resolve the current team’s Epic naming convention before drafting or creating an Epic. The fictional format below is an option only when selected by the user or established project guidance; it is not an inherited professional rule. Retain the skill’s description template, field defaults and authorization requirements.
 
-## Required format
+## Example format
 
 `EPC - CATEGORY - Description`
 
@@ -25,4 +25,4 @@ These examples illustrate the format; they are not existing work records or defa
 | `EPC - APP - Team Resource Portal` | Application scope |
 | `EPC - ARCH - Data Platform Migration` | Architecture scope |
 
-Apply the current user's or team's explicit convention when it differs from this reusable default. This creation rule does not authorize renaming existing tickets.
+Apply the current user's or team's explicit convention. This creation rule does not authorize renaming existing tickets.

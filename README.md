@@ -1,7 +1,8 @@
 # Skills
 
 Reusable agent skills for coordination, development, requirements, ticket creation,
-review, and work reporting. Maintained in
+review, and work reporting. Codex is the primary installation and documented
+experience; Claude Code and Cursor can use the same shared collection. Maintained in
 [pfonsecamoncada/Skills](https://github.com/pfonsecamoncada/Skills).
 Skills maintained in
 [Momentum Standard Skills](https://github.com/MomentumMPS/standards-momentum-skills)
@@ -13,6 +14,7 @@ one of these custom skills depends on them.
 | Skill | Ownership | Purpose |
 | --- | --- | --- |
 | [coordinator](skills/coordinator) | Custom | Coordinate the overall outcome across specialist skills and bounded agents. |
+| [project-manager](skills/project-manager) | Custom | Recover pending work and maintain private continuity for the current user. |
 | [skill-improver](skills/skill-improver) | Custom | Review and improve skill intent, strategy, and instructions. |
 | [mad-senior](skills/mad-senior) | Custom | Review consequential non-code decisions and evidence. |
 | [development-orchestrator](skills/development-orchestrator) | Custom | Coordinate skills, reviews, approvals, and delivery. |
@@ -31,137 +33,123 @@ one of these custom skills depends on them.
 Everything lives directly under `skills/<skill-name>/`. Supporting files stay
 with their skill. There are no product-specific copies or category directories.
 [SOURCES.md](SOURCES.md) records origins, dependencies, exclusions, and packaging
-changes. [AGENTS.md](AGENTS.md) defines how to maintain this repository.
+changes. [AGENTS.md](AGENTS.md) defines mandatory maintenance policies, with
+privacy first. [CLAUDE.md](CLAUDE.md) imports that same policy for Claude Code.
+Common workflows stay in SKILL.md; substantial host-specific details live
+alongside them in host references. There is one source for each skill.
 
-## Install globally
+## Download and install
 
-Here, **global means user-level: available across all local projects for your
-operating-system account**. Never install this collection into an individual
-project. Installation does not require administrator access or `sudo`.
+1. [Download the ZIP](https://github.com/pfonsecamoncada/Skills/archive/refs/heads/main.zip)
+   from the reviewed `main` branch, or download a specific tag/commit archive
+   when you need a fixed version. Extract it anywhere convenient.
+2. Open a terminal in the extracted folder and run:
 
-The installation uses these documented locations:
+   ```sh
+   python3 install.py
+   ```
 
-| Product | User-level location used here | Documentation |
+   On native Windows, use `py -3 install.py`. Python 3 is the only installer
+   prerequisite. Git, administrator access and symlink permissions are not needed.
+3. Start a fresh Codex session in any project. After successful installation,
+   you can delete the downloaded ZIP and extracted folder.
+
+Installation is **global for the current operating-system user**, across local
+projects. It copies the complete skill folders and required dependencies into
+Codex's user-level discovery location. Installed files do not depend on the
+location of the download, and editing them does not edit this repository.
+Use `python3 install.py --dry-run` to preview destinations without writing.
+
+### Optional hosts
+
+Codex is the default. Select other hosts explicitly:
+
+| Command | Destination | Documentation |
 | --- | --- | --- |
-| Codex | `~/.agents/skills/` | [OpenAI skill locations](https://learn.chatgpt.com/docs/build-skills) |
-| Claude Code | `~/.claude/skills/` | [Claude Code personal skills](https://code.claude.com/docs/en/skills) |
-| Cursor | `~/.agents/skills/`, shared with Codex | [Cursor skill locations](https://cursor.com/help/customization/skills) |
+| `python3 install.py` | `~/.agents/skills/` | [Codex skill locations](https://learn.chatgpt.com/docs/build-skills) |
+| `python3 install.py --host claude` | `~/.claude/skills/` | [Claude Code personal skills](https://code.claude.com/docs/en/skills) |
+| `python3 install.py --host cursor` | `~/.agents/skills/` | [Cursor skill locations](https://cursor.com/help/customization/skills) |
+| `python3 install.py --host all` | Both distinct roots above | Same discovery rules |
 
-### macOS and Linux
+On Windows, replace `python3` with `py -3`; `~` means your Windows user profile.
+For WSL, run the Linux command inside the WSL account. Codex and Cursor share
+one destination. Selecting Claude as well creates an independent installed copy
+for that host, while this repository maintains one shared collection. Unselected
+host roots are left untouched. No custom directory tree or permanent checkout
+is required on recipients' machines.
 
-Requires Git and Python 3. Keep the clone in a permanent location under your
-home directory. For example:
+### Existing installations and updates
 
-```sh
-mkdir -p "$HOME/.local/share"
-git clone https://github.com/pfonsecamoncada/Skills.git "$HOME/.local/share/agent-skills"
-cd "$HOME/.local/share/agent-skills"
-python3 install.py --dry-run
-python3 install.py
-```
+The installer never replaces existing content. Identical installed folders are
+accepted on reruns. A different folder, an existing symlink (including one from
+the old installer), or an obstructing path stops installation before copying.
+Generated caches and private runtime files are excluded from distribution.
 
-If you already have a clone, run the last two commands from that clone instead.
-The installer links each complete skill folder into the two user-level roots.
-Codex and Cursor share one root; Claude Code uses the other. Dependencies are
-included automatically. Links point to the clone, so keep it in place.
+For an update, download the new ZIP and run with `--dry-run` first. If it reports
+conflicts, compare those folders and move the affected installations to a backup
+**outside all skill discovery roots**, preserving local customizations. Rerun the
+installer after resolving the conflicts. There is no automatic overwrite,
+update service or background synchronization.
 
-Existing links to this clone are accepted on reruns. An existing directory,
-different link, or broken link with the same name stops installation before any
-links are created. Compare its contents with this repository and preserve local
-edits before moving it to a backup location **outside all skill discovery
-folders**. Do not use force-overwrite commands. Retry after resolving the
-reported conflicts. A later filesystem/permission failure can leave some links
-installed; correct that error and rerun safely.
+For an old symlink installation, preserve the link's source and any edits, then
+remove only the confirmed link before installing a copy. Do not delete its
+source checkout as part of migration. Check older roots such as
+`~/.codex/skills/`, `~/.cursor/skills/` and enabled plugins for duplicate skills;
+the installer does not remove unrelated installations.
 
-When migrating an older `jira-ticket-supporter`, keep its
-`references/project-memory.json` private. Move that file to
-`~/.local/state/jira-ticket-supporter/project-memory.json`, or the equivalent
-location under your configured `XDG_STATE_HOME`, before retiring the old skill.
-Do not overwrite existing state; reconcile both sets of entries if necessary.
+Keep private runtime state outside installed skills. For an older
+`jira-ticket-supporter` with `references/project-memory.json`, preserve it under
+`$XDG_STATE_HOME/jira-ticket-supporter/project-memory.json`, or
+`~/.local/state/jira-ticket-supporter/project-memory.json` when unset, before
+retiring the old installation. Reconcile existing state instead of overwriting it.
 
-Check for older duplicate installations in `~/.codex/skills/`,
-`~/.cursor/skills/`, and enabled plugins. The installer does not remove them.
-Keep one active source for each skill after comparing any local differences;
-duplicate copies can produce duplicate or conflicting skill choices.
+If a disk or permission error occurs after installation begins, read the reported
+path before retrying. Completed copies remain installed; a partial destination
+is preserved for inspection rather than overwritten. Resolve it as a conflict.
 
-### Windows
-
-For tools running inside WSL, use the Linux instructions inside that WSL user
-account. For native Windows tools, clone into a permanent directory under your
-Windows user profile and run:
-
-```powershell
-py -3 install.py --dry-run
-py -3 install.py
-```
-
-Native Windows symlinks require suitable permissions (commonly Developer Mode).
-If symlinks are unavailable, copy each complete `skills/<skill-name>` directory
-into `%USERPROFILE%\.agents\skills\` and `%USERPROFILE%\.claude\skills\` after
-checking for conflicts. Keep all fifteen folders together in each location so
-relative dependency references resolve. Copies must be updated manually.
+To uninstall, back up local edits and remove only the skill folders installed
+from this collection in your selected destination. Keep unrelated skills and
+private state. This repository does not install a background process or service.
 
 ### Verify and use
 
-Start a fresh session in each product, open an unrelated project, and ask it to
-list the available skills. Confirm the ten custom skills and five dependencies
-appear. For example: "Use requirement-collector to organize these requirements."
-Codex also supports `$skill-name`; Claude Code and Cursor support `/skill-name`.
+Start a fresh session in a selected client from an unrelated project and ask it
+to list available skills. The collection has eleven custom skills and five
+required dependencies. For example: "Use requirement-collector to organize these
+requirements." Codex also supports `$skill-name`; Claude Code and Cursor support
+`/skill-name`. Host tools and permissions remain specific to the selected client.
 
-The installer supplies instructions and supporting files, not service access.
-Jira workflows require authenticated `acli`; repository delivery requires Git
-and `gh`; discovery through `find-skills` uses Node.js/npm. Work research needs
-the relevant connectors or permitted browser/desktop tools. Check the selected
-skill's prerequisites and use the capabilities exposed by the current product.
-Skill validation uses Python 3 with PyYAML; the OpenAI Docs helpers use Node.js
-and network access. Install these only when their selected workflow needs them.
-Installing a skill does not install connectors or authorize external writes.
+The installer provides skills, not service access. Install and authenticate
+prerequisites only when a selected workflow needs them: `acli` for Jira, Git and
+`gh` for repository delivery, Node.js/npm for skill discovery, and appropriate
+connectors or authorized local tools for research. Skill validation uses Python
+with PyYAML; OpenAI Docs helpers use Node.js and network access. No executables,
+credentials, accounts or whole vendor plugins are bundled.
 
-When a required tool is missing, ask your assistant to help install it from its
-official source and verify it before continuing that workflow. Install optional
-tools only when needed. This repository bundles the five required third-party
-skill folders, not their entire upstream packages, command-line tools, or
-binaries. Their licenses and sources are recorded in SOURCES.md.
+Identity, audience, accounts and timezone come from the current user's context.
+No maintainer work contacts, private reporting preferences or professional
+context belongs in the collection. `SKILL.md` is the common entrypoint;
+`agents/openai.yaml` is optional Codex metadata. Installing locally does not
+install into cloud agents, remote machines or other operating-system accounts.
 
-The skills resolve identity, assignee, audience, timezone, and service choices
-from the current user's context. No maintainer account, personal reporting
-preferences, or private project memory is bundled. Shared skill files do not
-make every product's tools interchangeable.
-`agents/openai.yaml` is optional Codex metadata; the portable entrypoint is
-`SKILL.md`.
+## Maintaining the collection
 
-User-level files apply to local sessions. They are not automatically installed
-into remote machines, cloud agents, or other operating-system accounts.
+Back up separately maintained installed skills by comparing their active sources
+and sanitizing repository copies only. Review the full proposed content and diff
+before publishing. Preserve installed originals and private state, and do not
+copy entire installation or plugin-cache directories into this repository.
 
-## Update, back up, and remove
-
-From the permanent clone, run `git pull --ff-only`, review the changes, and run
-`python3 install.py` again to link newly added skills. Existing links immediately
-see updated files. Preserve local edits before pulling; do not reset them away.
-If a skill is removed from the repository, remove its obsolete user-level links
-after checking their targets.
-
-For installations linked to this clone, changes through an installed symlink
-also change the repository. When backing up separately maintained installed
-skills, compare their active sources and apply privacy and portability changes
-only to repository copies. Review `git diff` before committing and pushing backups. Do not copy entire installed-skill or plugin-cache directories
-into the repository.
-
-To uninstall, remove only the per-skill symlinks that point into this clone from
-`~/.agents/skills/` and `~/.claude/skills/`. Keep unrelated skills and private
-runtime state. Remove the clone only after its links are gone and any edits are
-backed up. For copy-based installs, compare and back up local edits before
-removing those specific copied folders.
-
-## Maintenance checks
+Before merging an update, run:
 
 ```sh
 python3 -m unittest -v test_install.py
+python3 -m unittest discover -s skills/work-detective/scripts -p 'test_*.py'
 git diff --check
 ```
 
-The installer tests use temporary directories and do not touch installed
-skills. Also check each changed skill's frontmatter, local references, dependency
-closure, and provenance. Keep runtime memory, credentials, work reports, and
-machine-specific absolute paths out of backups. Existing per-skill licenses are
-preserved; see [SOURCES.md](SOURCES.md) for license scope.
+Tests use temporary directories. Also verify the inventory, dependency closure,
+frontmatter, local references, provenance and privacy of the publication. Test
+installation from an archive and confirm it still works after removing the
+extracted source. Native Windows execution must be reported separately from
+portable-code or simulated-filesystem tests. Per-skill license scope is recorded
+in [SOURCES.md](SOURCES.md).

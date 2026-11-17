@@ -30,7 +30,7 @@ Outcome: [shipped / decided / in review / blocked / handed off, with the evidenc
 
 ## Fictional example (short range, chat format)
 
-All names, dates, ticket keys, and events below are illustrative, not user data.
+All people, projects, ticket keys, dates and events below are illustrative.
 
 # What you did, Mon Oct 19 – Fri Oct 23, 2026
 
