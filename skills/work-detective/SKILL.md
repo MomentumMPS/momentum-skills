@@ -19,7 +19,7 @@ Complete intake before searching. The user's involvement choice is required for 
 
 1. **Time range**, if not already stated. Convert relative ranges ("last two weeks", "since the offsite") to explicit start and end dates in the user's timezone, state them back, and use them in every search.
 2. **Involvement level**: (a) only things they authored or actively took part in, (b) also things they were looped in on (CCs, mentions, meetings they attended silently), or (c) everything in range with their involvement level flagged per item. This changes the queries, so it must be answered before Phase 2.
-3. **Email provider**, only when email is in scope: Gmail or Outlook/Microsoft 365. Do not assume a provider. The user's email domain is a hint, not an answer (many companies run Gmail on their own domain). If they say both, search both.
+3. **Email provider**, only when email is in scope: Gmail or Outlook/Microsoft 365. Use an explicitly supplied or established provider; otherwise ask. The user's email domain is a hint, not an answer (many companies run Gmail on their own domain). If they say both, search both.
 4. **Audience and purpose**, if not obvious: self-review, a manager 1:1, a performance review, a status report, a timesheet, a client. This sets the tone and how much detail to keep.
 
 Do not ask about output format. Pick it in Phase 4 based on range size.
@@ -36,9 +36,9 @@ Read `references/sources.md` for what each source holds and how to query it, and
 
 Procedure:
 
-1. List every source that could hold evidence. Default to the full set: Slack, email, calendar, meeting notes and transcripts, documents, tickets, code, and AI conversations (Claude, Codex). The user may narrow this; don't narrow it yourself.
+1. List every source that could hold evidence. Default to the full set: Slack, email, calendar, meeting notes and transcripts, documents, tickets, code, and AI conversations (Claude Code and Codex sessions, both by default). The user may narrow this; don't narrow it yourself.
 2. For each source, discover usable structured tools, CLI/API or local reads before the independent browser route. If a relevant connector is available but disconnected, offer it once; do not promise that another route works until verified. For email, check only the provider chosen at intake. Explicit source restrictions apply to cross-source leads too; a Codex-only investigation does not authorize Slack or email searches.
-3. **Mark a source blocked when no usable authorized route remains**, including when independent browser access is unavailable or requires user sign-in. Say exactly which source, which door you tried, and what would open it: enabling browser or desktop control for the conversation, signing in themselves (never ask for or type credentials), or connecting the connector. Continue independent accessible collection while awaiting that decision. The user chose to be asked before accepting incomplete coverage; do not present a partial report as complete or repeatedly retry the same blocked route.
+3. **Mark a source blocked when no usable authorized route remains**, including when independent browser access is unavailable or requires user sign-in. Say exactly which source, which door you tried, and what would open it: enabling browser or desktop control for the conversation, signing in themselves (never ask for or type credentials), or connecting the connector. Continue independent accessible collection while awaiting that decision. Resolve essential coverage gaps with the current user; do not present a partial report as complete or repeatedly retry the same blocked route.
 4. Tell the user, in one line per source, which door you'll use before you start collecting, so they can redirect you.
 
 ## Phase 3 — Collect evidence

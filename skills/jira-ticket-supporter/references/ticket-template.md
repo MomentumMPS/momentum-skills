@@ -73,6 +73,10 @@ Include a source or related-work link only when it helps the reader act, underst
 - Avoid implementation plans, file inventories, schema dumps, and speculative architecture in ordinary tickets. Keep a technical constraint if omitting it would change the requested outcome, security, data preservation, or integration contract. Use the smallest explanation needed by the intended assignee.
 - Keep sensitive personal data and secrets out. Use sanitized examples when examples are necessary.
 
+### LLM Context section
+
+When a separately authorized context file exists, resolve its repository, branch and path from the current project. Verify it with the repository's supported read tool before linking it. End the description with a heading `LLM Context` and one native link (text: `<KEY> context file`) to that verified file. Do not assume a private organization or destination. Adding this section to an existing ticket is a narrow description edit: preserve all other content. The section counts toward the word limit. No context file or publication is implied by installing this skill.
+
 For chat drafts, use Markdown links with descriptive labels. In Jira ADF, create a native link mark on descriptive text. Never embed `[label](url)` or `[label|url]` as literal ADF text. If only plain text is supported, use a descriptive label followed by the URL on its own line, only when useful; avoid glued-on punctuation. Do not invent missing URLs or claim that readers have access unless verified.
 
 ## Comments
@@ -83,7 +87,7 @@ Say what changed or was found, its consequence for the requested outcome, and wh
 
 Example update:
 
-“Completed training now displays Complete consistently, including GDPR. Checks confirm that incomplete and overdue values still behave as before. The change is ready for deployment; it is not live yet.”
+“Completed items now display Complete consistently across views. Checks confirm that pending and overdue items still behave as before. The change is ready for deployment; it is not live yet.”
 
 Example blocker:
 

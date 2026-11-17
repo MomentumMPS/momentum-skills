@@ -27,17 +27,54 @@ class InstallTests(unittest.TestCase):
     def test_links_are_global_repeatable_and_include_dependencies(self):
         install(self.repo, self.profile)
         install(self.repo, self.profile)
-        for product in (".agents", ".claude"):
-            for name in ("custom", "dependency"):
-                target = self.profile / product / "skills" / name
-                self.assertTrue(target.is_symlink())
-                self.assertEqual(target.resolve(), (self.repo / "skills" / name).resolve())
+        for name in ("custom", "dependency"):
+            target = self.profile / ".agents/skills" / name
+            self.assertTrue(target.is_symlink())
+            self.assertEqual(target.resolve(), (self.repo / "skills" / name).resolve())
+        self.assertFalse((self.profile / ".claude").exists())
+        self.assertFalse((self.profile / ".cursor").exists())
         self.assertFalse((self.repo / ".agents").exists())
         (self.repo / "skills/custom/SKILL.md").write_text("Updated\n")
-        self.assertEqual((self.profile / ".claude/skills/custom/SKILL.md").read_text(), "Updated\n")
+        self.assertEqual((self.profile / ".agents/skills/custom/SKILL.md").read_text(), "Updated\n")
+
+    def test_explicit_hosts_select_only_their_roots(self):
+        for host, expected in (
+            ("codex", {".agents"}),
+            ("claude", {".claude"}),
+            ("cursor", {".agents"}),
+            ("all", {".agents", ".claude"}),
+        ):
+            with self.subTest(host=host):
+                profile = self.root / host
+                install(self.repo, profile, host=host)
+                install(self.repo, profile, host=host)
+                self.assertEqual({path.name for path in profile.iterdir()}, expected)
+                for product in expected:
+                    links = list((profile / product / "skills").iterdir())
+                    self.assertEqual({path.name for path in links}, {"custom", "dependency"})
+                    for link in links:
+                        self.assertTrue(link.is_symlink())
+                        self.assertEqual(link.resolve(), (self.repo / "skills" / link.name).resolve())
+
+    def test_cursor_reuses_codex_links(self):
+        install(self.repo, self.profile)
+        install(self.repo, self.profile, host="cursor")
+        self.assertEqual({path.name for path in self.profile.iterdir()}, {".agents"})
+
+    def test_unselected_host_is_untouched(self):
+        self.profile.mkdir()
+        (self.profile / ".claude").write_text("Keep me\n")
+        install(self.repo, self.profile)
+        self.assertEqual((self.profile / ".claude").read_text(), "Keep me\n")
+
+    def test_unknown_host_writes_nothing(self):
+        with self.assertRaises(ValueError):
+            install(self.repo, self.profile, host="unknown")
+        self.assertFalse(self.profile.exists())
 
     def test_dry_run_writes_nothing(self):
-        install(self.repo, self.profile, dry_run=True)
+        for host in ("codex", "claude", "cursor", "all"):
+            install(self.repo, self.profile, host=host, dry_run=True)
         self.assertFalse(self.profile.exists())
 
     def test_existing_directory_prevents_all_writes(self):
@@ -45,7 +82,7 @@ class InstallTests(unittest.TestCase):
         existing.mkdir(parents=True)
         (existing / "SKILL.md").write_text("Local edits\n")
         with self.assertRaises(FileExistsError):
-            install(self.repo, self.profile)
+            install(self.repo, self.profile, host="all")
         self.assertEqual((existing / "SKILL.md").read_text(), "Local edits\n")
         self.assertFalse((self.profile / ".agents").exists())
 
@@ -62,7 +99,7 @@ class InstallTests(unittest.TestCase):
         self.profile.mkdir()
         (self.profile / ".claude").write_text("Keep me\n")
         with self.assertRaises(FileExistsError):
-            install(self.repo, self.profile)
+            install(self.repo, self.profile, host="all")
         self.assertFalse((self.profile / ".agents").exists())
 
 

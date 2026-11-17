@@ -1,6 +1,6 @@
 # Browser and desktop access, per source
 
-Use these routes only after suitable connector, CLI/API, or local-file access has been checked. Browser fallback requires an agent-owned instance or connection that operates independently of the user's foreground browser and profile; do not assume authentication is shared. If the agent ships its own guidance for those tools, read it before the first step; this file only says where to go and what to look for.
+Use these routes only after suitable connector, CLI/API, or local-file access has been checked. Browser fallback requires an agent-owned instance or connection that operates independently of the user's foreground browser and profile; do not assume authentication is shared. If the agent ships its own guidance for those tools, read it before the first step (in Claude Code: the built-in browser pane `mcp__Claude_Browser__*` via skill `anthropic-skills:built-in-browser`, which is agent-owned; Claude in Chrome `mcp__claude-in-chrome__*` via `anthropic-skills:chrome-browser`, which is the user's own Chrome; desktop control via `anthropic-skills:computer-use`); this file only says where to go and what to look for.
 
 Ground rules, repeated because they matter:
 - Read only. Search boxes and filters are the only things you type into. Never send, reply, react, archive, delete, accept, or change a setting.
@@ -19,7 +19,7 @@ Open the workspace. Use the search box with Slack's own operators:
 Switch the results view to "Messages" and sort by date. Scroll to load more; results are paged in batches of ~20. Open a result to read its thread; the thread panel on the right holds the replies. Copy the permalink from the message's "More actions → Copy link" only if you need it in the report; the date, channel and gist are usually enough.
 Slack desktop app via desktop control works the same way (Cmd/Ctrl+G opens search).
 
-## 2. Gmail — `https://mail.google.com` (use when selected at intake)
+## 2. Gmail — `https://mail.google.com` (only if chosen at intake)
 Type the query into the search bar: `from:me after:YYYY/MM/DD before:YYYY/MM/DD`, then `to:me ...`, then `cc:me ...`. The results list shows date, subject, counterpart and snippet; that is enough for most items. Open a thread only to confirm whether the user replied. Pagination: the "Older" arrow at top right, or append `&page=` is unreliable, so use the arrow. Gmail shows 50 per page by default; keep going until dates fall before the range.
 
 ## 3. Outlook — `https://outlook.office.com/mail` (only if chosen at intake)
@@ -48,7 +48,7 @@ The recents page lists candidates with titles and relative times; paginate throu
 - Chat history: `https://chatgpt.com` — the sidebar lists conversations grouped by day; scroll to load older ones. Use titles and dates to select candidates, then read relevant messages through the outcome and later corrections.
 - Codex (cloud): `https://chatgpt.com/codex` — the task list shows each task with repo, title and date, plus whether a PR was opened. Open the task and verify its actual outcome; a PR being opened does not prove merge, deployment or acceptance. Record the dated action and verified link.
 - Codex CLI (local): sessions live under `~/.codex/sessions/` (JSONL, one file per session with timestamps). Prefer scoped read-only file tools when app history tools are insufficient. Inspect timestamped messages and action results for the selected sessions through the requested range; do not infer completion from filenames or the first user line.
-- Claude Code (local): `~/.claude/projects/<project>/*.jsonl`; same approach, timestamps are in each line.
+- Claude Code (local): `~/.claude/projects/<encoded-cwd>/*.jsonl`; same approach, timestamps are in each line. In the desktop app, prefer the session tools `mcp__ccd_session_mgmt__list_sessions` and `search_session_transcripts` for discovery.
 
 ## 10. Tickets
 - Linear: `https://linear.app` — "My issues" view, filter Updated date range; or the search with `assignee:me updated:>YYYY-MM-DD`.

@@ -1,7 +1,8 @@
 # Skills
 
 Reusable agent skills for coordination, development, requirements, ticket creation,
-review, and work reporting. Maintained in
+review, and work reporting. Codex is the primary installation and documented
+experience; Claude Code and Cursor can use the same shared collection. Maintained in
 [pfonsecamoncada/Skills](https://github.com/pfonsecamoncada/Skills).
 Skills maintained in
 [Momentum Standard Skills](https://github.com/MomentumMPS/standards-momentum-skills)
@@ -13,6 +14,7 @@ one of these custom skills depends on them.
 | Skill | Ownership | Purpose |
 | --- | --- | --- |
 | [coordinator](skills/coordinator) | Custom | Coordinate the overall outcome across specialist skills and bounded agents. |
+| [project-manager](skills/project-manager) | Custom | Recover pending work and maintain private continuity for the current user. |
 | [skill-improver](skills/skill-improver) | Custom | Review and improve skill intent, strategy, and instructions. |
 | [mad-senior](skills/mad-senior) | Custom | Review consequential non-code decisions and evidence. |
 | [development-orchestrator](skills/development-orchestrator) | Custom | Coordinate skills, reviews, approvals, and delivery. |
@@ -31,7 +33,10 @@ one of these custom skills depends on them.
 Everything lives directly under `skills/<skill-name>/`. Supporting files stay
 with their skill. There are no product-specific copies or category directories.
 [SOURCES.md](SOURCES.md) records origins, dependencies, exclusions, and packaging
-changes. [AGENTS.md](AGENTS.md) defines how to maintain this repository.
+changes. [AGENTS.md](AGENTS.md) defines mandatory maintenance policies, with
+privacy first. [CLAUDE.md](CLAUDE.md) imports that same policy for Claude Code.
+Common workflows stay in SKILL.md; substantial host-specific details live
+alongside them in host references. There is one source for each skill.
 
 ## Install globally
 
@@ -39,13 +44,14 @@ Here, **global means user-level: available across all local projects for your
 operating-system account**. Never install this collection into an individual
 project. Installation does not require administrator access or `sudo`.
 
-The installation uses these documented locations:
+The installer defaults to Codex. Choose other hosts explicitly with `--host`:
 
-| Product | User-level location used here | Documentation |
+| Selection | User-level location used here | Documentation |
 | --- | --- | --- |
-| Codex | `~/.agents/skills/` | [OpenAI skill locations](https://learn.chatgpt.com/docs/build-skills) |
-| Claude Code | `~/.claude/skills/` | [Claude Code personal skills](https://code.claude.com/docs/en/skills) |
-| Cursor | `~/.agents/skills/`, shared with Codex | [Cursor skill locations](https://cursor.com/help/customization/skills) |
+| `--host codex` (default) | `~/.agents/skills/` | [OpenAI skill locations](https://learn.chatgpt.com/docs/build-skills) |
+| `--host claude` | `~/.claude/skills/` | [Claude Code personal skills](https://code.claude.com/docs/en/skills) |
+| `--host cursor` | `~/.agents/skills/`, shared with Codex | [Cursor skill locations](https://cursor.com/help/customization/skills) |
+| `--host all` | Both distinct roots above, without duplicate shared links | Same discovery rules |
 
 ### macOS and Linux
 
@@ -61,9 +67,20 @@ python3 install.py
 ```
 
 If you already have a clone, run the last two commands from that clone instead.
-The installer links each complete skill folder into the two user-level roots.
-Codex and Cursor share one root; Claude Code uses the other. Dependencies are
-included automatically. Links point to the clone, so keep it in place.
+The installer links each complete skill folder into the selected user-level
+root, including required dependencies. Links point to the clone, so keep it in
+place. The default leaves the Claude root untouched. To include Claude Code:
+
+```sh
+python3 install.py --host all --dry-run
+python3 install.py --host all
+```
+
+Use `--host claude` for just Claude Code or `--host cursor` for the shared root.
+Because Codex and Cursor read that same root, selecting either can make the
+skills visible to both products. Host selection chooses discovery locations;
+it does not isolate products that share them. No installed copies are migrated
+or removed automatically.
 
 Existing links to this clone are accepted on reruns. An existing directory,
 different link, or broken link with the same name stops installation before any
@@ -97,14 +114,15 @@ py -3 install.py
 
 Native Windows symlinks require suitable permissions (commonly Developer Mode).
 If symlinks are unavailable, copy each complete `skills/<skill-name>` directory
-into `%USERPROFILE%\.agents\skills\` and `%USERPROFILE%\.claude\skills\` after
-checking for conflicts. Keep all fifteen folders together in each location so
+into `%USERPROFILE%\.agents\skills\` for Codex/Cursor, or
+`%USERPROFILE%\.claude\skills\` for Claude Code, after checking for conflicts.
+Keep all sixteen folders together in each selected location so
 relative dependency references resolve. Copies must be updated manually.
 
 ### Verify and use
 
-Start a fresh session in each product, open an unrelated project, and ask it to
-list the available skills. Confirm the ten custom skills and five dependencies
+Start a fresh session in each selected product, open an unrelated project, and
+ask it to list the available skills. Confirm the eleven custom skills and five dependencies
 appear. For example: "Use requirement-collector to organize these requirements."
 Codex also supports `$skill-name`; Claude Code and Cursor support `/skill-name`.
 
@@ -124,8 +142,9 @@ skill folders, not their entire upstream packages, command-line tools, or
 binaries. Their licenses and sources are recorded in SOURCES.md.
 
 The skills resolve identity, assignee, audience, timezone, and service choices
-from the current user's context. No maintainer account, personal reporting
-preferences, or private project memory is bundled. Shared skill files do not
+from the current user's context. No maintainer account, work contacts,
+professionally sensitive context, personal reporting preferences, or private
+project memory belongs in the collection. Shared skill files do not
 make every product's tools interchangeable.
 `agents/openai.yaml` is optional Codex metadata; the portable entrypoint is
 `SKILL.md`.
@@ -136,7 +155,8 @@ into remote machines, cloud agents, or other operating-system accounts.
 ## Update, back up, and remove
 
 From the permanent clone, run `git pull --ff-only`, review the changes, and run
-`python3 install.py` again to link newly added skills. Existing links immediately
+`python3 install.py --host <selection>` again to link newly added skills for
+your chosen hosts (`codex`, `claude`, `cursor`, or `all`). Existing links immediately
 see updated files. Preserve local edits before pulling; do not reset them away.
 If a skill is removed from the repository, remove its obsolete user-level links
 after checking their targets.
